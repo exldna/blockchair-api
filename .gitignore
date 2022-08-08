@@ -1,0 +1,13 @@
+**/docs/build/
+
+**/.vs/
+**/.vscode/
+
+/api/cxx/build/
+/api/cxx/out/
+/api/cxx/bin/
+
+__pycache__/
+
+/api/python/env/
+/api/python/venv/
