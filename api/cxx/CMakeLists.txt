@@ -12,6 +12,11 @@ if(CMAKE_SOURCE_DIR STREQUAL CHAIR_SOURCE_DIR)
     set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "CMake")
 endif()
 
+if(WIN32)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+endif()
+
 option(CHAIR_USE_SYSTEM_CURL "Use the curl lib already installed on this system" ON)
 
 option(CHAIR_BUILD_STATIC_LIBRARY "Generate static library target" ${CHAIR_STANDALONE})
@@ -40,8 +45,6 @@ configure_file(
     "config/version.hxx.in"
     "${PROJECT_BINARY_DIR}/include/config/version.hxx"
 )
-
-include(FetchContent)
 
 # confiure utils
 add_subdirectory("./ext/utils")
@@ -74,14 +77,7 @@ if(CHAIR_BUILD_STATIC_LIBRARY)
     )
 
     target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PUBLIC utils)
-    target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PRIVATE cpr::cpr)
-
-    install(TARGETS ${CHAIR_STATIC_LIBRARY_NAME}
-        RUNTIME DESTINATION bin
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        PUBLIC_HEADER DESTINATION include
-    )
+    target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PUBLIC cpr::cpr)
 endif()
 
 if(CHAIR_BUILD_TESTS)

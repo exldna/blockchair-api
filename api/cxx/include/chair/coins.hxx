@@ -20,16 +20,17 @@ namespace chair::coins {
         xin, // mixin
         xtz, // tezos
         eos, // eos
-        x_token // tether usd-coin binance-usd
+        xchain // tether usd-coin binance-usd
     };
 
     template<CoinClass _coin_class>
     class Coin {
     protected:
         const CoinClass coin_class = _coin_class;
-        const uint id;
     public:
-        Coin(uint _id) : id(_id) {}
+        const std::string name;
+
+        Coin(const std::string& _name) : name(_name) {}
 
         // no copy
         Coin(const Coin&) = delete;
@@ -40,35 +41,35 @@ namespace chair::coins {
         Coin& operator=(Coin&&) = delete;
 
         bool operator==(const Coin& other) {
-            return coin_class == other.coin_class && id == other.id;
+            return coin_class == other.coin_class && name == other.name;
         }
     };
 
-    inline const Coin<CoinClass::btc> bitcoin{0};
-    inline const Coin<CoinClass::btc> bitcoin_cash{1};
-    inline const Coin<CoinClass::btc> litecoin{2};
-    inline const Coin<CoinClass::btc> bitcoin_sv{3};
-    inline const Coin<CoinClass::btc> dogecoin{4};
-    inline const Coin<CoinClass::btc> dash{5};
-    inline const Coin<CoinClass::btc> groestlcoin{6};
-    inline const Coin<CoinClass::btc> zcash{7};
-    inline const Coin<CoinClass::btc> ecash{8};
-    inline const Coin<CoinClass::btc> bitcoin_testnet{9};
+    inline const Coin<CoinClass::btc> bitcoin{"bitcoin"};
+    inline const Coin<CoinClass::btc> bitcoin_cash{"bitcoin-cash"};
+    inline const Coin<CoinClass::btc> litecoin{"litecoin"};
+    inline const Coin<CoinClass::btc> bitcoin_sv{"bitcoin-sv"};
+    inline const Coin<CoinClass::btc> dogecoin{"dogecoin"};
+    inline const Coin<CoinClass::btc> dash{"dash"};
+    inline const Coin<CoinClass::btc> groestlcoin{"groestlcoin"};
+    inline const Coin<CoinClass::btc> zcash{"zcash"};
+    inline const Coin<CoinClass::btc> ecash{"ecash"};
+    inline const Coin<CoinClass::btc> bitcoin_testnet{"bitcoin/testnet"};
 
-    inline const Coin<CoinClass::eth> ethereum{0};
-    inline const Coin<CoinClass::eth> ethereum_testnet{1};
+    inline const Coin<CoinClass::eth> ethereum{"ethereum"};
+    inline const Coin<CoinClass::eth> ethereum_testnet{"ethereum/testnet"};
 
-    inline const Coin<CoinClass::xpr> ripple{0};
-    inline const Coin<CoinClass::xlm> stellar{0};     
-    inline const Coin<CoinClass::xmr> monero{0};
-    inline const Coin<CoinClass::ada> cardano{0};
-    inline const Coin<CoinClass::xin> mixin{0};
-    inline const Coin<CoinClass::xtz> tezos{0};
-    inline const Coin<CoinClass::eos> eos{0};
+    inline const Coin<CoinClass::xpr> ripple{"ripple"};
+    inline const Coin<CoinClass::xlm> stellar{"stellar"};
+    inline const Coin<CoinClass::xmr> monero{"monero"};
+    inline const Coin<CoinClass::ada> cardano{"cardano"};
+    inline const Coin<CoinClass::xin> mixin{"mixin"};
+    inline const Coin<CoinClass::xtz> tezos{"tezos"};
+    inline const Coin<CoinClass::eos> eos{"eos"};
 
-    inline const Coin<CoinClass::x_token> tether{0};
-    inline const Coin<CoinClass::x_token> usd_coin{1};
-    inline const Coin<CoinClass::x_token> binance_usd{2};
+    inline const Coin<CoinClass::xchain> tether{"tether"};
+    inline const Coin<CoinClass::xchain> usd_coin{"usd-coin"};
+    inline const Coin<CoinClass::xchain> binance_usd{"binance-usd"};
 }
 
 # endif // !CHAIR_COINS_HXX

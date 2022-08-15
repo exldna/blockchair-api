@@ -8,7 +8,6 @@
 # ifndef CHAIR_HXX
 # define CHAIR_HXX
 
-# include <string>
 # include <utils/utils.hxx>
 
 /// @brief chair namespace
@@ -18,5 +17,6 @@ namespace chair {
 }
 
 # include <chair/coins.hxx>
+# include <chair/api.hxx>
 
 # endif // !CHAIR_HXX
