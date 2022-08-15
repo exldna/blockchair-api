@@ -1,6 +1,6 @@
 /**
  *  @file chair.hxx
- *  @brief chair welcome header
+ *  @brief chair main header
  *
  *  @author exidna
  */
@@ -16,5 +16,7 @@ namespace chair {
     /// @return chair version
     utils::Version get_version();
 }
+
+# include <chair/coins.hxx>
 
 # endif // !CHAIR_HXX
