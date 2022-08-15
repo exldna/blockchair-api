@@ -52,31 +52,10 @@ endif()
 
 set_property(TARGET utils PROPERTY FOLDER "external")
 
-# configure curl
-# TODO: import curl with https support to make request with native interface
-# set(HTTP_ONLY ON CACHE INTERNAL "" FORCE)
-# set(SSL_ENABLED ON CACHE INTERNAL "" FORCE)
-# set(BUILD_CURL_EXE OFF CACHE INTERNAL "" FORCE)
-# set(BUILD_SHARED_LIBS OFF CACHE INTERNAL "" FORCE)
-# set(BUILD_TESTING OFF)
-
-# if(CHAIR_USE_SYSTEM_CURL)
-#     find_package(CURL COMPONENTS HTTPS)
-
-#     if(CURL_FOUND)
-#         message(STATUS "Curl ${CURL_VERSION_STRING} found on this system")
-#     endif()
-# endif()
-
-# if(NOT CURL_FOUND OR NOT CHAIR_USE_SYSTEM_CURL)
-#     FetchContent_Declare(curl
-#         URL https://github.com/curl/curl/releases/download/curl-7_84_0/curl-7.84.0.tar.xz
-#         URL_HASH SHA256=2D118B43F547BFE5BAE806D8D47B4E596EA5B25A6C1F080AEF49FBCD817C5DB8 # the file hash for curl-7.84.0.tar.xz
-#         USES_TERMINAL_DOWNLOAD TRUE) # <-- This is needed only for Ninja to show download progress
-#     FetchContent_MakeAvailable(curl)
-# endif()
-
-# set_property(TARGET libcurl PROPERTY FOLDER "external")
+# configure cpr
+add_subdirectory("./ext/cpr")
+set_property(TARGET cpr PROPERTY FOLDER "external")
+set_property(TARGET zlib PROPERTY FOLDER "external")
 
 if(CHAIR_BUILD_STATIC_LIBRARY)
     message(STATUS "chair: build static library")
@@ -95,7 +74,7 @@ if(CHAIR_BUILD_STATIC_LIBRARY)
     )
 
     target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PUBLIC utils)
-    target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PRIVATE CURL::libcurl)
+    target_link_libraries(${CHAIR_STATIC_LIBRARY_NAME} PRIVATE cpr::cpr)
 
     install(TARGETS ${CHAIR_STATIC_LIBRARY_NAME}
         RUNTIME DESTINATION bin
