@@ -8,6 +8,7 @@
 # ifndef CHAIR_HXX
 # define CHAIR_HXX
 
+# include <string>
 # include <utils/utils.hxx>
 
 /// @brief chair namespace
