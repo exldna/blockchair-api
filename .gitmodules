@@ -1,3 +1,6 @@
 [submodule "api/cxx/ext/utils"]
 	path = api/cxx/ext/utils
 	url = https://github.com/cxx-tools/utils.git
+[submodule "api/cxx/ext/cpr"]
+	path = api/cxx/ext/cpr
+	url = https://github.com/libcpr/cpr.git
