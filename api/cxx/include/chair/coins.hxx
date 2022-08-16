@@ -8,6 +8,8 @@
 # ifndef CHAIR_COINS_HXX
 # define CHAIR_COINS_HXX
 
+# include <chair/system.hxx>
+
 namespace chair::coins {
     /// @brief coins classes
     enum class CoinClass : unsigned {
@@ -24,25 +26,104 @@ namespace chair::coins {
     };
 
     template<CoinClass _coin_class>
-    class Coin {
+    class CoinBase {
     protected:
         const CoinClass coin_class = _coin_class;
+        using Base = CoinBase<_coin_class>;
     public:
         const std::string name;
 
-        Coin(const std::string& _name) : name(_name) {}
+        CoinBase(const std::string& _name) : name(_name) {}
+        CoinBase(std::string&& _name) : name(std::move(_name)) {}
 
         // no copy
-        Coin(const Coin&) = delete;
-        Coin& operator=(const Coin&) = delete;
+        CoinBase(const CoinBase&) = delete;
+        CoinBase& operator=(const CoinBase&) = delete;
 
         // no move
-        Coin(Coin&&) = delete;
-        Coin& operator=(Coin&&) = delete;
+        CoinBase(CoinBase&&) = delete;
+        CoinBase& operator=(CoinBase&&) = delete;
 
-        bool operator==(const Coin& other) {
+        bool operator==(const CoinBase& other) {
             return coin_class == other.coin_class && name == other.name;
         }
+    };
+
+    template<CoinClass _coin_class>
+    class Coin {};
+
+    template<>
+    class Coin<CoinClass::btc> : public CoinBase<CoinClass::btc> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+
+        chair::Response get_stats() const {
+            return chair::System::get().request(name + "/stats");
+        }
+    };
+
+    template<>
+    class Coin<CoinClass::eth> : public CoinBase<CoinClass::eth> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xpr> : public CoinBase<CoinClass::xpr> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xlm> : public CoinBase<CoinClass::xlm> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xmr> : public CoinBase<CoinClass::xmr> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::ada> : public CoinBase<CoinClass::ada> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xin> : public CoinBase<CoinClass::xin> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xtz> : public CoinBase<CoinClass::xtz> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::eos> : public CoinBase<CoinClass::eos> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
+    };
+
+    template<>
+    class Coin<CoinClass::xchain> : public CoinBase<CoinClass::xchain> {
+    public:
+        Coin(const std::string& _name) : Base(_name) {}
+        Coin(std::string&& _name) : Base(std::move(_name)) {}
     };
 
     inline const Coin<CoinClass::btc> bitcoin{"bitcoin"};
