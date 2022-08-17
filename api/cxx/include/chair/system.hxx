@@ -64,9 +64,9 @@ namespace chair {
 
         template<typename... Args>
         inline Response request(const std::string& url, Args&&... args) const {
-            auto response = cpr::Get(cpr::Url{host_name + url}, std::forward(args));
-            if (response.status_code == 0) return {/*empty*/};
-            return DataParser{response.text};
+            // auto response = cpr::Get(cpr::Url{host_name + url}, std::forward(args)...);
+            // if (response.status_code == 0) return {/*empty*/};
+            return DataParser{url};
         }
     };
 }
