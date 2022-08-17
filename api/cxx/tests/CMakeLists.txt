@@ -1,7 +1,7 @@
 
 set(CHAIR_TESTS_LIST
     "smoke_test.cxx"
-    "main.cxx"
+    "chair_main.cxx"
 )
 
 set(CHAIR_TESTS_LINKS

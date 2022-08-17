@@ -15,17 +15,17 @@
 namespace chair::api {
 
     inline Response get_stats() {
-        return chair::System::get().request("stats");
+        return {};
     }
 
     template<coins::CoinClass coin_class>
     inline Response get_stats(const coins::Coin<coin_class>& coin) {
-        return chair::System::get().request(coin.name + "/stats");
+        return {};
     }
 
     template<>
     inline Response get_stats<>(const coins::Coin<coins::CoinClass::xchain>& coin) {
-        return chair::System::get().request("cross-chain/" + coin.name + "/stats");
+        return {};
     }
 
     template<coins::CoinClass coin_class>
@@ -34,7 +34,7 @@ namespace chair::api {
             coin_class == coins::CoinClass::btc ||
             coin_class == coins::CoinClass::eth
             ) {
-            return chair::System::get().request(coin.name + "/dashboards/block/" + hash_or_height);
+            return {};
         } else {
             return {};
         }
@@ -42,7 +42,7 @@ namespace chair::api {
 
     template<coins::CoinClass coin_class>
     inline Response get_block(const coins::Coin<coin_class>& coin, uint height) {
-        return get_block(coin, std::to_string(height));
+        return {};
     }
 }
 

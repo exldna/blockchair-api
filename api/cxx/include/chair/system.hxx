@@ -13,17 +13,40 @@
 
 # include <cpr/cpr.h>
 
-# include <utils/patterns.hxx>
-
 namespace chair {
-    struct ResponseData {
-        std::string header;
-        std::string data;
+    class DataParser {
+        bool is_parsed;
+        std::string source;
+
+        using DataType = std::string;
+        DataType data;
+    public:
+        inline explicit DataParser(const std::string& src) {
+            source = src;
+            is_parsed = false;
+        }
+
+        inline void parse() {
+            data = source; // TODO: parse json response
+            source.clear();
+            is_parsed = true;
+        }
+
+        inline const DataType& get_data() {
+            if (!is_parsed) {
+                parse();
+            }
+            return data;
+        }
+
+        inline const DataType& get_data_unchecked() {
+            return data;
+        }
     };
 
-    using Response = std::optional<ResponseData>;
+    using Response = std::optional<DataParser>;
 
-    class System : public utils::ptt::Singleton<System> {
+    class System {
     private:
         const std::string host_name = "https://api.blockchair.com/";
 
@@ -39,10 +62,11 @@ namespace chair {
         System(System&&) = delete;
         System& operator=(System&&) = delete;
 
-        inline Response request(const std::string& url) {
-            auto response = cpr::Get(cpr::Url{host_name + url});
+        template<typename... Args>
+        inline Response request(const std::string& url, Args&&... args) const {
+            auto response = cpr::Get(cpr::Url{host_name + url}, std::forward(args));
             if (response.status_code == 0) return {/*empty*/};
-            return ResponseData{"", response.text};
+            return DataParser{response.text};
         }
     };
 }
